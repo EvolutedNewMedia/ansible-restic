@@ -10,10 +10,14 @@ It supports S3 backend or SFTP backend and will thus setup the SSH config and SS
 
 The role will download and install the restic binary (version `restic_version`) into `restic_path` if the file does not exist.
 
+If you want to force the installation, overwrite the binary or update restic, you can run ansible with `--extra-vars restic_force_install=true`.
+
 If you want to force the installation, overwrite the binary or update restic, you can run ansible with `--extra-vars restic_install=true`.
 
 ### Restic configuration
 
+- `restic_arch`: architecture of the restic binary (eg `linux_amd64` see architecture notes below)
+- `restic_version`: version of the restic binary to download (eg `0.9.6`)
 - `restic_user`: user to run restic as (`root`)
 - `restic_user_home`: home directory of the restic_user (`/root`)
 - `restic_password`: password used for repository encryption
@@ -25,7 +29,7 @@ If you want to force the installation, overwrite the binary or update restic, yo
 
 Each folder has a `path` and an `exclude` property (which defaults to nothing). The `exclude` property is the literal argument passed to restic (exemple: `--exclude .cache --exclude .local`).
 
-`restic_default_folders` and `restic_folders` are combined to form the final list of backuped folders.
+`restic_default_folders` and `restic_folders` are combined to form the final list of backed up folders.
 
 - `restic_databases`: a list of databases to dump
 
@@ -34,6 +38,14 @@ Each database has a `name` property which will be the name of the restic snapsho
 - `restic_forget`: run `restic forget` as `ExecStartPost` with `--keep-within {{ restic_forget_keep_within }}` (`true`)
 - `restic_forget_keep_within`: period of time to use with `--keep-within` (`30d`)
 - `restic_prune`: run `restic prune` as `ExecStartPost` (`true`)
+
+### Hardware Architecture & Restic Versions
+Restic supports a number of different hardware architectures, the default is `linux_amd64` but you can override this with the `restic_arch` variable.
+
+To get the supported list of architectures, head to the Restic GitHub releases page here: https://github.com/restic/restic/releases
+The assets section lists all available files, the architecture is after the version number and will be something along the lines of `linux_amd64`, or `linux_arm64`, `linux_riscv64`, etc. Not all versions support all architectures, so you may need to try a few to find one that works for you.
+
+The restic version can also be overridden with the `restic_version` variable, this should be a valid version number from the Restic GitHub releases page which has a matching architecture for the system you are running it on.
 
 ### SSH/SFTP backend configuration
 
@@ -122,4 +134,6 @@ MIT
 
 ## Author Information
 
-See my other Ansible roles at [angristan/ansible-roles](https://github.com/angristan/ansible-roles).
+- Original Source: [angristan/ansible-restic](https://github.com/angristan/ansible-restic).
+- Arch support: [oscarcarlsson/ansible-restic](https://github.com/oscarcarlsson/ansible-restic)
+- 

@@ -10,8 +10,6 @@ It supports S3 backend or SFTP backend and will thus setup the SSH config and SS
 
 The role will download and install the restic binary (version `restic_version`) into `restic_path` if the file does not exist.
 
-If you want to force the installation, overwrite the binary or update restic, you can run ansible with `--extra-vars restic_force_install=true`.
-
 If you want to force the installation, overwrite the binary or update restic, you can run ansible with `--extra-vars restic_install=true`.
 
 ### Restic configuration
@@ -136,4 +134,3 @@ MIT
 
 - Original Source: [angristan/ansible-restic](https://github.com/angristan/ansible-restic).
 - Arch support: [oscarcarlsson/ansible-restic](https://github.com/oscarcarlsson/ansible-restic)
-- 

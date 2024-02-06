@@ -47,14 +47,14 @@
     mode: "0640"
   vars:
     restic_folders_combined: "{{ restic_default_folders + restic_folders }}"
-  notify: Reload systemd
+  notify: systemd reload
 
 - name: Add systemd timer for restic
   ansible.builtin.template:
     src: restic-backup.timer.j2
     dest: /etc/systemd/system/restic-backup.timer
     mode: "0644"
-  notify: Reload systemd
+  notify: systemd reload
 
 - name: Enable and start restic timer
   ansible.builtin.systemd:

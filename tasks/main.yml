@@ -4,7 +4,8 @@
     path: "{{ restic_path }}"
   register: restic_binary
 
-- include_tasks: install.yml
+- name: Include install.yml if restic is not installed or restic_install is true
+  ansible.builtin.include_tasks: install.yml
   when: not restic_binary.stat.exists or restic_install
 
 - name: Overwrite SSH config for backup server

@@ -5,9 +5,12 @@
   register: restic_binary
 
 - name: Print restic install var
-  debug: "msg=restic_install '{{ restic_install }}'"
+  debug:
+    var: restic_install
+
 - name: Print restic_binary var
-  debug: "msg=restic_binary.stat.exists: '{{ restic_binary.stat.exists }}'"
+  debug:
+    var: restic_binary.stat.exists
 
 - name: Include install.yml if restic is not installed or restic_install is true
   ansible.builtin.include_tasks: install.yml
